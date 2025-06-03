@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from pathlib import Path
-import aiofiles
+import threading
 import gzip
 import json
 import os
@@ -14,7 +14,7 @@ logging.basicConfig(filename=f"{app_name}.log", encoding='utf-8', level=logging.
 
 app = Flask(app_name)
 
-async def handle_webhook_request(request_content):
+def handle_webhook_request(request_content):
   crawlbase_rid = request_content[0]
   requested_url = request_content[1]
   original_status = request_content[2]
@@ -42,23 +42,22 @@ async def handle_webhook_request(request_content):
     # meta.json
     meta = {'rid': crawlbase_rid, 'requested_url': requested_url, 'original_status': original_status, 'crawlbase_status': crawlbase_status}
     meta_file = os.path.join(rid_dir, f"{crawlbase_rid}.meta.json")
-    async with aiofiles.open(meta_file, 'w') as f:
-        pretty_json = json.dumps(meta, indent=2)
-        await f.write(pretty_json)
+    with open(meta_file, 'w') as f:
+      pretty_json = json.dumps(meta, indent=2)
+      f.write(pretty_json)
 
     # body
     body_file = os.path.join(rid_dir, crawlbase_rid)
-    async with aiofiles.open(body_file, 'wb') as f:
-        await f.write(body)
+    with open(body_file, 'wb') as f:
+      f.write(body)
 
     logger.debug(f"{crawlbase_rid} processed")
   except Exception as e:
     error_message = f"An error occured for {crawlbase_rid}\n{e}"
     logger.error(error_message)
-    raise
 
 @app.route('/webhook', methods=['POST'])
-async def webhook():
+def webhook():
   crawlbase_rid = request.headers.get('rid')
   if crawlbase_rid == "dummyrequest":
     logger.info("Dummy request from crawlbase received")
@@ -73,10 +72,8 @@ async def webhook():
         request.data
     )
 
-  try:
-    await handle_webhook_request(request_content)
-  except Exception as e:
-    return ('', 500)
+  thread = threading.Thread(target=handle_webhook_request, args=(request_content,))
+  thread.start()
 
   return ('', 204)
 
