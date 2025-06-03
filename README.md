@@ -37,7 +37,7 @@ Before running the examples, ensure that you replace all instances of the follow
 ngrok http 5768
 ```
 
-2. Set the callback URL:Set the callback URL:
+2. Set the callback URL:
 
 Copy the forwarding URL provided by ngrok and paste it into the **Callback URL** field of your [Crawler settings](https://crawlbase.com/dashboard/crawler/crawlers).
 Example:
