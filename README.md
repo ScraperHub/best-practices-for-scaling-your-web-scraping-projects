@@ -4,18 +4,23 @@ We invite you to explore our [blog](https://crawlbase.com/blog/best-practices-fo
 
 ## Setting Up Your Coding Environment
 
-Before building your Amazon proxy unblocker, you'll need to set up a basic Python environment. Here's how to get started:
+Before building the application, you’ll need to set up a basic Python environment. Follow these steps to get started:
 
-1. [Install Python 3](https://kinsta.com/knowledgebase/install-python/#how-to-install-python) on your computer
-2. Run `python -m pip install -r requirements.txt`
-3. To make our webhook publicly accessible by Crawlbase servers for demonstration purposes, we need to [install and configure ngrok](https://ngrok.com/docs/getting-started/).
+1. [Install Python 3](https://kinsta.com/knowledgebase/install-python/#how-to-install-python) on your system.
+2. Install the required dependencies by running: 
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+3. To make the webhook publicly accessible to Crawlbase servers for demonstration purposes, [install and configure ngrok](https://ngrok.com/docs/getting-started/).
 
 ## Obtaining API Credentials
 
-1. Create an account at [Crawlbase](https://crawlbase.com/signup) and log in.
-2. After registration, you will receive 5,000 free requests.
-3. Locate and copy your Crawling API [Normal or Javascript requests token](https://crawlbase.com/dashboard/account/docs).
-4. [Create a new Crawler](https://crawlbase.com/dashboard/crawler/new).
+1. [Sign up for a Crawlbase account](https://crawlbase.com/signup) and log in.
+2. Upon registration, you’ll receive 5,000 free requests to get started.
+3. Navigate to your [Account Docs](https://crawlbase.com/dashboard/account/docs) and copy your Crawling API token (Normal or JavaScript requests).
+4. [Create a new Crawler](https://crawlbase.com/dashboard/crawler/new) to start configuring your crawl tasks.
 
 ## Running the Example Scripts
 
