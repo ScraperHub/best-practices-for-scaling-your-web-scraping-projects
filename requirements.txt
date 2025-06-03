@@ -1,4 +1,2 @@
-aiofiles
 flask
-flask[async]
 waitress
